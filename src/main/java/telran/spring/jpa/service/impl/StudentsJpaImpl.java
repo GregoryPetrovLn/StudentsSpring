@@ -7,7 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import telran.spring.jpa.dto.MarkDto;
 import telran.spring.jpa.dto.StudentDto;
-import telran.spring.jpa.dto.StudentMarksCount;
+import telran.spring.jpa.dto.support_interfaces.IntervalMarks;
+import telran.spring.jpa.dto.support_interfaces.StudentMarksCount;
 import telran.spring.jpa.dto.SubjectDto;
 import telran.spring.jpa.entities.Mark;
 import telran.spring.jpa.entities.Student;
@@ -111,5 +112,10 @@ public class StudentsJpaImpl implements Students {
     @Override
     public List<Integer> findTopMarksEncountered(String subject, int nMarks) {
         return subjects.findTopMarksEncountered(subject, nMarks);
+    }
+
+    @Override
+    public List<IntervalMarks> findIntervalMarks(int interval) {
+        return marks.findIntervalMarks(interval);
     }
 }

@@ -5,7 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import telran.spring.jpa.dto.StudentMarksCount;
+import telran.spring.jpa.dto.support_interfaces.IntervalMarks;
+import telran.spring.jpa.dto.support_interfaces.StudentMarksCount;
 import telran.spring.jpa.entities.Mark;
 
 import java.util.List;
@@ -66,7 +67,17 @@ public interface MarkRepository extends JpaRepository<Mark, Integer> {
             "group by name";
     @Query(value = sqlRequest5, nativeQuery = true)
     List<StudentMarksCount> findStudentMarksCount();
+    //================================
+    //================================
+    //================================
 
+    String sqlRequest6 = "select (mark / :m_interval) * :m_interval as min, " +
+            "(mark / :m_interval) * :m_interval + :m_interval -1 as max, " +
+            "count(*) as marksCount " +
+            "from marks " +
+            "group by min, max " +
+            "order by 1";
 
-
+    @Query(value = sqlRequest6, nativeQuery = true)
+    List<IntervalMarks> findIntervalMarks(@Param("m_interval") int interval);
 }

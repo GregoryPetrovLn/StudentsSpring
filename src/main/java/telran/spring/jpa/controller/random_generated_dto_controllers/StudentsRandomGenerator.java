@@ -1,4 +1,4 @@
-package telran.spring.jpa.controller;
+package telran.spring.jpa.controller.random_generated_dto_controllers;
 
 
 import java.util.concurrent.ThreadLocalRandom;
@@ -6,7 +6,6 @@ import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import telran.spring.jpa.dto.MarkDto;
 import telran.spring.jpa.dto.StudentDto;
@@ -42,7 +41,6 @@ public class StudentsRandomGenerator {
     }
 
     private int getRandomNumber(int min, int max) {
-
         return ThreadLocalRandom.current().nextInt(min, max + 1);
     }
 

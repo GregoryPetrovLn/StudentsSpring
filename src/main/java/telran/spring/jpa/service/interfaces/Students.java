@@ -3,6 +3,8 @@ package telran.spring.jpa.service.interfaces;
 
 import org.springframework.data.repository.query.Param;
 import telran.spring.jpa.dto.*;
+import telran.spring.jpa.dto.support_interfaces.IntervalMarks;
+import telran.spring.jpa.dto.support_interfaces.StudentMarksCount;
 
 import java.util.*;
 
@@ -35,7 +37,6 @@ public interface Students {
 
     List<Integer> findTopMarksEncountered(String subject ,int nMarks);
 
-
-
+    List<IntervalMarks> findIntervalMarks(int interval);
 
 }

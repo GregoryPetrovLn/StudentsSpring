@@ -9,8 +9,8 @@ import telran.spring.jpa.entities.Subject;
 import java.util.List;
 
 public interface SubjectRepository extends JpaRepository<Subject, Integer> {
-    String sqlRequest = "select subject, sum(mark) from students_marks_subjects group by subject\n" +
-            "order by sum desc";
+    String sqlRequest = "select subject from students_marks_subjects group by subject\n" +
+            "order by sum(mark) desc";
 
     @Query(value = sqlRequest, nativeQuery = true)
     List<String> getSubjectsHighestMarks();

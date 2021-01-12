@@ -2,7 +2,6 @@ package telran.spring.jpa.entities;
 
 import javax.persistence.*;
 
-
 @Entity
 @Table(name = "marks")
 public class Mark {
@@ -10,6 +9,7 @@ public class Mark {
     @Id
     int id;
     int mark;
+
     @ManyToOne
     Student student;
     @ManyToOne

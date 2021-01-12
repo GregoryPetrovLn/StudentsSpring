@@ -1,54 +1,40 @@
 package telran.spring.jpa.controller;
 
-
-import javax.annotation.PostConstruct;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.*;
 
-import telran.spring.jpa.dto.*;
-import telran.spring.jpa.generatedDTO.*;
+import telran.spring.jpa.dto.supported_interfaces.IntervalMarks;
+import telran.spring.jpa.dto.supported_interfaces.StudentMarksCount;
 import telran.spring.jpa.service.interfaces.Students;
-import static telran.spring.jpa.generatedDTO.GetRandomInt.*;
-import java.util.stream.Stream;
 
-@Component
+
+@RestController
+@RequestMapping(value = "/students")
 public class StudentsController {
-    private final int AMOUNT_OF_GENERATED_STUDENTS = 20;
-    private final int AMOUNT_OF_GENERATED_SUBJECTS = 20;
-    private final int AMOUNT_OF_GENERATED_MARKS = 100;
-
     @Autowired
     Students students;
 
-    @PostConstruct
-    void fillDB() {
-        addStudents();
-        addSubjects();
-        addMarks();
+    @GetMapping("/best")
+    List<String> bestStudentNames(@RequestParam(name = "n_students", defaultValue = "0") int nStudents,
+                                  @RequestParam(name = "subject", required = false) String subject) {
+        if (nStudents == 0 && subject == null) {
+            return students.bestStudents();
+        }
+        if (nStudents == 0) {
+            return students.bestStudentsSubject(subject);
+        }
+        if (subject == null) {
+            return students.bestStudents(nStudents);
+        }
+        return students.bestStudentsSubject(nStudents, subject);
     }
 
-    private void addMarks() {
-        Stream.iterate(0, n -> n + 1)
-                .limit(AMOUNT_OF_GENERATED_MARKS)
-                .forEach(i -> students.addMark(new MarkDto(
-                        randomInt(0, Names.names.length - 1),
-                        randomInt(0, Subjects.subjects.length - 1),
-                        Marks.getRandomMark())));
+    @GetMapping("/marks/count")
+    List<StudentMarksCount> studentsMarksCount() {
+        return students.getStudentsMarksCount();
     }
 
-    private void addSubjects() {
-        Stream.iterate(0, n -> n + 1)
-                .limit(AMOUNT_OF_GENERATED_SUBJECTS)
-                .forEach(i -> students.addSubject(
-                        new SubjectDto(i, Subjects.getSubject(i))));
-    }
 
-    private void addStudents() {
-        Stream.iterate(0, n -> n + 1)
-                .limit(AMOUNT_OF_GENERATED_STUDENTS)
-                .forEach(i -> students.addStudent(
-                        new StudentDto(i,
-                                Names.getName(randomInt(0, Names.names.length - 1)))));
-    }
 }

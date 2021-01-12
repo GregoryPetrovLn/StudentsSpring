@@ -164,7 +164,6 @@ class StudentsApplicationTests {
     }
 
 
-    @Disabled
     @Nested
     @DisplayName("UPDATE")
     class Update {

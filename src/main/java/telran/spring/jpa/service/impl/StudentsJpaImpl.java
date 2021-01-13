@@ -132,6 +132,7 @@ public class StudentsJpaImpl implements Students {
     }
 
     @Override
+    @Transactional
     public void setAvgMark(String name, String subject) {
         int avgMark = getAvgMark(name, subject);
         deleteMarks(name, subject);

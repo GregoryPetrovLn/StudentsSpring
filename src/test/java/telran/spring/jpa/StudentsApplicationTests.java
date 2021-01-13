@@ -167,6 +167,7 @@ class StudentsApplicationTests {
     @Nested
     @DisplayName("UPDATE")
     class Update {
+        @Sql(scripts = {CLASS_PATH_SQL})
         @Test
         void setAvgMark() throws Exception {
             int status = getStatus("/marks/set/avg?name=Moshe&subject=Java");
